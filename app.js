@@ -10,7 +10,7 @@ const {
   checkForAuthenticationCookie,
   setUserLocals,
 } = require("./middlewares/auth");
-const Blogs = require("./models/blog");
+const blogService = require("./services/blogService");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -32,7 +32,7 @@ app.use(setUserLocals);
 app.use(express.static(path.resolve("./public")));
 
 app.get("/", async (req, res) => {
-  const allBlog = await Blogs.find({});
+  const allBlog = await blogService.getAllBlogs();
   res.render("home", {
     user: req.user,
     blogs: allBlog,
